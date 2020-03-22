@@ -1,0 +1,10 @@
+[user]
+    email = njohnhale@gmail.com
+    name = Nick Hale
+[color]
+    ui = auto
+[core]
+    safecrlf = true
+[github]
+    user = njhale 
+
