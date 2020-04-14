@@ -7,4 +7,14 @@
     safecrlf = true
 [github]
     user = njhale 
+[diff]
+    algorithm = patience
+    compactionHeuristic = true
+    mnemonicprefix = true
+[merge]
+    tool = vimdiff
+[mergetool]
+    prompt = true
+[mergetool "vimdiff"]
+    cmd = vim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 

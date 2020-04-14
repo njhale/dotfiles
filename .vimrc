@@ -13,7 +13,7 @@ endif
 call plugpac#begin()
 
 " core
-Pack 'k-takata/minpack', { 'type': 'opt' } " vim-plug interface for native vim packages
+Pack 'k-takata/minpac', { 'type': 'opt' } " vim-plug interface for native vim packages
 
 " behavior
 Pack 'tpope/vim-sensible'   " sane defaults
@@ -22,6 +22,9 @@ Pack 'tpope/vim-surround'   " wrap blocks with parens, brackets, quotes, etc.
 Pack 'ctrlpvim/ctrlp.vim'   " full path fuzzy finder
 Pack 'dense-analysis/ale'   " async linting and language server client 
 Pack 'ervandew/supertab'    " use <Tab> for insert completion
+Pack 'majutsushi/tagbar'    " side bar for browsing the current file's tags
+Pack 'tpope/vim-unimpaired' " set of standard symmetric key mappings
+Pack 'preservim/nerdtree'   " file tree navigation
 
 " look and feel 
 Pack 'vim-airline/vim-airline'        " sleek status/tabline
@@ -78,6 +81,8 @@ if !exists('g:airline_symbols')
     let g:airline_symbols.maxliner = '' 
 endif
 
+map <C-n> :NERDTreeToggle<CR>
+
 " vim-go
 au FileType go nmap <leader>i <Plug>(go-info)
 au FileType go nmap <leader>gd <Plug>(go-doc)
@@ -90,6 +95,7 @@ au FileType go nmap gd <Plug>(go-def)
 au FileType go nmap <leader>ds <Plug>(go-def-split)
 au FileType go nmap <leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <leader>dt <Plug>(go-def-tab)
+let g:go_fmt_command = "goimports"
 let g:go_fmt_options = { 'gofmt': '-s' }
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
@@ -151,7 +157,7 @@ set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo " set comma
 set guioptions-=T " remove gui toolbar
 set guioptions-=m " remove gui menu bar 
 set hidden " hide buffers when opening other files, without being forced to lose or save changes
-set nohlsearch " don't highlight all previous search matches
+set hlsearch " highlight all previous search matches
 set ignorecase " ignore case in search patterns
 set smartcase " override ignorecase option if the search pattern contains uppercase letters
 set lazyredraw " don't redraw screen when executing macros, registers, and other commands -- if needed, redraw tih :redraw

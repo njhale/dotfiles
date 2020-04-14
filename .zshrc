@@ -72,7 +72,7 @@ export GIT_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 
 # prefer GNU sed b/c BSD sed doesn't handle whitespace the same
-if which gsed > /dev/null; then alias sed=gsed; fi
+if which gsed > /dev/null; then export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"; fi
 
 # iTerm2 shell integration
 test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integration.zsh
@@ -84,5 +84,20 @@ export GOBIN="$GOPATH/bin"
 # kubernetes
 if which kubectl > /dev/null; then
   alias k=kubectl
+  export KUBECONFIG="$HOME/.kube/config"
+fi
+
+
+export PATH=$PATH:/usr/local/kubebuilder/bin
+if ! which kubebuilder > /dev/null; then
+    os=$(go env GOOS)
+    arch=$(go env GOARCH)
+
+    # download kubebuilder and extract it to tmp
+    curl -L https://go.kubebuilder.io/dl/2.3.1/${os}/${arch} | tar -xz -C /tmp/
+
+    # move to a long-term location and put it on your path
+    # (you'll need to set the KUBEBUILDER_ASSETS env var if you put it somewhere else)
+    sudo mv /tmp/kubebuilder_2.3.1_${os}_${arch}/ /usr/local/kubebuilder
 fi
 
