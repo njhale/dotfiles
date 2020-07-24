@@ -52,6 +52,7 @@ if ! zgen saved; then
   zgen prezto prompt
   zgen prezto syntax-highlighting
   zgen prezto git
+  zgen prezto kubectl
   zgen prezto editor key-bindings 'vi'
   zgen prezto '*:*' case-sensitive 'no'
   zgen prezto '*:*' color 'yes'
