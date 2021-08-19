@@ -101,3 +101,17 @@ if ! which kubebuilder > /dev/null; then
     sudo mv /tmp/kubebuilder_2.3.1_${os}_${arch}/ /usr/local/kubebuilder
 fi
 
+# git aliases
+function checkout_remote_branch() {
+    local org="${1}"
+    local branch="${2}"
+    local repo="$(basename $(git rev-parse --show-toplevel))"
+
+    git remote add "${org}" "git@github.com:${org}/${repo}.git" || \
+        git fetch "${org}" "${branch}" && \
+        git switch --no-track -C "${org}_${branch}" ${org}/${branch} && \
+        git remote remove "${org}"
+}
+
+alias -g grb="checkout_remote_branch"
+
