@@ -34,7 +34,7 @@ if ! zgen saved; then
   zgen load peterhurford/git-it-on.zsh
   zgen load rupa/z
   zgen load unixorn/autoupdate-zgen
-  zgen load zsh-users/zsh-completions src
+  zgen load zsh-users/zsh-completions
   zgen load zsh-users/zsh-history-substring-search
   zgen load zsh-users/zsh-syntax-highlighting
 
