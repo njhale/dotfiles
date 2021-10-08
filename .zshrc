@@ -107,10 +107,14 @@ function checkout_remote_branch() {
     local branch="${2}"
     local repo="$(basename $(git rev-parse --show-toplevel))"
 
-    git remote add "${org}" "git@github.com:${org}/${repo}.git" || \
+    function clean() {
+        git remote remove "${1}"
+    }
+    trap "clean ${org}" EXIT
+
+    git remote add "${org}" "git@github.com:${org}/${repo}.git" && \
         git fetch "${org}" "${branch}" && \
-        git switch --no-track -C "${org}_${branch}" ${org}/${branch} && \
-        git remote remove "${org}"
+        git switch --no-track -C "${org}_${branch}" "${org}/${branch}"
 }
 
 alias -g grb="checkout_remote_branch"
