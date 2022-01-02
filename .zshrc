@@ -77,6 +77,11 @@ if which gsed > /dev/null; then export PATH="/usr/local/opt/gnu-sed/libexec/gnub
 # iTerm2 shell integration
 test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integration.zsh
 
+# rust (b/c rustup doesn't play well with the rust brew formulae)
+if ! which rustup > /dev/null; then
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
+
 # set GOPATH and GOBIN
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
