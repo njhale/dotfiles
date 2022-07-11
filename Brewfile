@@ -107,10 +107,6 @@ brew "libproxy"
 brew "libssh2"
 # Scalable distributed version control system
 brew "mercurial"
-# Menu-driven communications program
-brew "minicom"
-# MIT/GNU Scheme development tools and runtime library
-brew "mit-scheme"
 # Libraries and data formats for array-oriented scientific data
 brew "netcdf"
 # Platform built on V8 to build network applications
@@ -161,23 +157,13 @@ brew "bufbuild/buf/buf"
 brew "jzelinskie/faq/faq"
 # interact with gRPC services from your command line
 brew "njhale/tap/grpctl", args: ["HEAD"]
-# BitTorrent client
-cask "deluge"
-# Voice and text chat software
-cask "discord"
 # Web browser
 cask "firefox"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
-# End-to-end encryption software
-cask "keybase"
-# VPN client for secure internet access and private browsing
-cask "nordvpn"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
 # Team communication and collaboration software
 cask "slack"
-# Multimedia player
-cask "vlc"
 # Video communication and virtual meeting platform
 cask "zoom"
