@@ -20,7 +20,8 @@ function conditional_extend_path() {
 
 # zgen
 if [[ ! -d $HOME/.zgen ]]; then
-  git clone git@github.com:tarjoilija/zgen.git "$HOME/.zgen"
+  echo "predicate triggered"
+  git clone https://github.com/tarjoilija/zgen.git "$HOME/.zgen"
 fi
 export ZGEN_RESET_ON_CHANGE=($HOME/.zshrc)
 export ZGEN_PLUGIN_UPDATE_DAYS=30
@@ -92,20 +93,6 @@ if which kubectl > /dev/null; then
   export KUBECONFIG="$HOME/.kube/config"
 fi
 
-
-export PATH=$PATH:/usr/local/kubebuilder/bin
-if ! which kubebuilder > /dev/null; then
-    os=$(go env GOOS)
-    arch=$(go env GOARCH)
-
-    # download kubebuilder and extract it to tmp
-    curl -L https://go.kubebuilder.io/dl/2.3.1/${os}/${arch} | tar -xz -C /tmp/
-
-    # move to a long-term location and put it on your path
-    # (you'll need to set the KUBEBUILDER_ASSETS env var if you put it somewhere else)
-    sudo mv /tmp/kubebuilder_2.3.1_${os}_${arch}/ /usr/local/kubebuilder
-fi
-
 # git aliases
 function checkout_remote_branch() {
     local org="${1}"
@@ -123,4 +110,10 @@ function checkout_remote_branch() {
 }
 
 alias -g grb="checkout_remote_branch"
+
+# hook in direnv https://direnv.net/docs/hook.html#zsh
+eval "$(direnv hook zsh)"
+
+# set the shell's macos file descriptor and process limits
+ulimit -n 524288
 
