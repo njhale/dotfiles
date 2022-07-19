@@ -1,7 +1,7 @@
 " leader
 let mapleader = ','
 
-" setup minipac, a vim-plug interface for native vim packages 
+" setup minpac, a vim-plug interface for native vim packages 
 set nocompatible
 if empty(glob('~/.vim/autoload/plugpac.vim'))
     silent execute '!git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac'
@@ -60,6 +60,9 @@ if has("unnamedplus")
 else
     set clipboard=unnamed
 endif
+
+" copy absolute path of current file buffer to clipboard
+:command CopyPath let @+ = expand('%:p')
 
 " fuzzy finding
 nmap <C-B> :CtrlPBuffer<CR>
