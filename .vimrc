@@ -31,6 +31,7 @@ Pack 'vim-airline/vim-airline'        " sleek status/tabline
 Pack 'vim-airline/vim-airline-themes'
 Pack 'chriskempson/base16-vim'        " base16 color schemes for vim
 Pack 'jzelinskie/monokai-soda.vim'    " thanks Jimmy!
+Pack 'fladson/vim-kitty'              " syntax highlighting for Kitty terminal configs
 
 " language
 Pack 'sheerun/vim-polyglot'                           " combo pack
