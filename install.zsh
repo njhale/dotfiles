@@ -31,4 +31,3 @@ for FILE in $DOTFILES_DIR/*(D); do;
     fi
 done
 
-

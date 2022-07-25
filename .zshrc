@@ -117,3 +117,5 @@ eval "$(direnv hook zsh)"
 # set the shell's macos file descriptor and process limits
 ulimit -n 524288
 
+# BASE16_SHELL=$HOME/.config/base16-shell/
+# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

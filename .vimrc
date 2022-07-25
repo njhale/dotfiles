@@ -29,6 +29,7 @@ Pack 'preservim/nerdtree'   " file tree navigation
 " look and feel 
 Pack 'vim-airline/vim-airline'        " sleek status/tabline
 Pack 'vim-airline/vim-airline-themes'
+Pack 'chriskempson/base16-vim'        " base16 color schemes for vim
 Pack 'jzelinskie/monokai-soda.vim'    " thanks Jimmy!
 
 " language
@@ -39,6 +40,10 @@ Pack 'andrewstuart/vim-kubernetes', { 'for': 'yaml' } " k8s yaml and auto-comple
 call plugpac#end()
 
 " colors
+" if filereadable(expand("~/.vimrc_background"))
+"   let base16colorspace=256
+"   source ~/.vimrc_background
+" endif
 colorscheme monokai-soda
 
 " ale
