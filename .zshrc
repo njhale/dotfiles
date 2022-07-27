@@ -67,8 +67,15 @@ fi
 # disable ctrl+d EOF
 setopt ignoreeof
 
-# set vim as the default editor 
-export EDITOR=vim
+# prefer neovim as the default editor
+if which nvim > /dev/null; then
+  export EDITOR=nvim
+  alias vi=nvim
+  alias vim=nvim
+else
+  export EDITOR=vim
+  alias nvim=vim
+fi
 export GIT_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 
