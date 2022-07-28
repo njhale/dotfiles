@@ -24,8 +24,8 @@ if [[ ! -d $HOME/.zgen ]]; then
   git clone https://github.com/tarjoilija/zgen.git "$HOME/.zgen"
 fi
 export ZGEN_RESET_ON_CHANGE=($HOME/.zshrc)
-export ZGEN_PLUGIN_UPDATE_DAYS=30
-export ZGEN_SYSTEM_UPDATE_DAYS=30
+export ZGEN_PLUGIN_UPDATE_DAYS=15
+export ZGEN_SYSTEM_UPDATE_DAYS=15
 export NVM_LAZY_LOAD=true
 source "$HOME/.zgen/zgen.zsh"
 if ! zgen saved; then
@@ -60,7 +60,8 @@ if ! zgen saved; then
   zgen prezto 'module:editor' key-bindings 'vi'
   zgen prezto 'module:syntax-highlighting' highlighters 'main' 'brackets' 'pattern' 'cursor'
   zgen prezto 'module:terminal' auto-title 'yes'
-  if [[ $OSTYPE == darwin* ]]; then zgen prezto prompt theme 'sorin'; else zgen prezto prompt theme 'skwp'; fi
+  # if [[ $OSTYPE == darwin* ]]; then zgen prezto prompt theme 'sorin'; else zgen prezto prompt theme 'skwp'; fi
+  zgen prezto prompt theme 'sorin'
   zgen save
 fi
 
@@ -81,9 +82,6 @@ export VISUAL=$EDITOR
 
 # prefer GNU sed b/c BSD sed doesn't handle whitespace the same
 if which gsed > /dev/null; then export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"; fi
-
-# iTerm2 shell integration
-test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integration.zsh
 
 # rust (b/c rustup doesn't play well with the rust brew formulae)
 if ! which rustup > /dev/null; then
@@ -124,5 +122,3 @@ eval "$(direnv hook zsh)"
 # set the shell's macos file descriptor and process limits
 ulimit -n 524288
 
-# BASE16_SHELL=$HOME/.config/base16-shell/
-# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

@@ -11,8 +11,8 @@ local INSTALL_DIR="${INSTALL_DIR:-$HOME}"
 
 # Symlink dotfiles
 declare -A special
-special[kitty.conf]="${XDG_CONFIG_HOME}/kitty/kitty.conf"
-special[init.lua]="${XDG_CONFIG_HOME}/nvim/init.lua"
+special[kitty]="${XDG_CONFIG_HOME}/kitty"
+special[nvim]="${XDG_CONFIG_HOME}/nvim"
 special[.git]='SKIP'
 special[Brewfile]='SKIP'
 special[README.md]='SKIP'

@@ -37,13 +37,22 @@ end
 -- packer
 local packer = require('packer').startup {
   function(use)
-    use {'bogado/file-line'}
+    use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
+    use {
+      'kyazdani42/nvim-tree.lua',
+      requires = {
+        'kyazdani42/nvim-web-devicons', -- optional, for file icons
+      },
+      tag = 'nightly' -- optional, updated every week. (see issue #1193)
+    }
+    -- use {'bogado/file-line'}
     use {'ervandew/supertab'}
     use {'fatih/vim-go'}
-    use {'folke/which-key.nvim'}
     use {'jjo/vim-cue'}
     use {'junegunn/vim-easy-align'}
     use {'jzelinskie/monokai-soda.vim', requires = 'tjdevries/colorbuddy.vim'}
+    use {'folke/which-key.nvim'}
+    use {'folke/tokyonight.nvim'}
     use {'majutsushi/tagbar'}
     use {'milkypostman/vim-togglelist'}
     use {'neovim/nvim-lspconfig'}
@@ -55,63 +64,69 @@ local packer = require('packer').startup {
     use {'tpope/vim-repeat'}
     use {'tpope/vim-surround'}
     use {'tpope/vim-unimpaired'}
-    use {'vim-airline/vim-airline-themes', requires = 'vim-airline/vim-airline'}
+    -- use {'vim-airline/vim-airline-themes', requires = 'vim-airline/vim-airline'}
     use {'vim-scripts/a.vim'}
     use {'wbthomason/packer.nvim', opt = true}
   end,
 }
 if not packer_exists then packer.sync() end -- install on first run
 
+vim.g.tokyonight_style = 'storm'
+
 -- misc global opts
 local settings = {
-  -- 'set colorcolumn=80,100',
-  'set cursorline',
-  'set completeopt-=preview',
-  'set cpoptions=ces$',
-  'set ffs=unix,dos',
-  'set fillchars=vert:·',
-  'set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo',
-  'set guioptions-=T',
-  'set guioptions-=m',
-  'set hidden',
-  'set hlsearch',
-  'set ignorecase',
-  'set lazyredraw',
-  'set list listchars=tab:·\\ ,eol:¬',
-  'set nobackup',
-  'set noerrorbells',
-  'set noshowmode',
-  'set noswapfile',
-  'set number',
-  'set shellslash',
-  'set showfulltag',
-  'set showmatch',
-  'set showmode',
-  'set smartcase',
-  'set synmaxcol=2048',
-  'set t_Co=256',
-  'set title',
-  'set ts=2 sts=2 sw=2 et ci',
-  'set ttyfast',
-  'set vb',
-  'set virtualedit=all',
-  'set visualbell',
-  'set wrapscan',
-  'set termguicolors',
-  'set cpoptions+=_',
-  'colorscheme monokai-soda',
+-- 'set colorcolumn=80,100',
+'set cursorline',
+'set completeopt-=preview',
+'set cpoptions=ces$',
+'set ffs=unix,dos',
+'set fillchars=vert:·',
+'set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo',
+'set guioptions-=T',
+'set guioptions-=m',
+'set hidden',
+'set hlsearch',
+'set ignorecase',
+'set lazyredraw',
+'set list listchars=tab:·\\ ,eol:¬',
+'set nobackup',
+'set noerrorbells',
+'set noshowmode',
+'set noswapfile',
+'set number',
+'set shellslash',
+'set showfulltag',
+'set showmatch',
+'set showmode',
+'set smartcase',
+'set synmaxcol=2048',
+'set t_Co=256',
+'set title',
+'set ts=2 sts=2 sw=2 et ci',
+'set ttyfast',
+'set vb',
+'set virtualedit=all',
+'set visualbell',
+'set wrapscan',
+'set termguicolors',
+'set cpoptions+=_',
+'colorscheme tokyonight', 
+-- 'colorscheme monokai-soda',
 }
 for _, setting in ipairs(settings) do vim.cmd(setting) end
+
+vim.opt.termguicolors = true
+require('bufferline').setup()
 
 -- setup colorizer
 require('colorizer').setup()
 
 -- setup treesitter
 require('nvim-treesitter.configs').setup({
-  -- ensure_installed = "maintained",
-  ignore_install = { "phpdoc" },
-  disable = { "phpdoc" },
-  highlight = { enable = true },
+-- ensure_installed = "maintained",
+ignore_install = { "phpdoc" },
+disable = { "phpdoc" },
+highlight = { enable = true },
 })
 
 -- vim-go
@@ -121,12 +136,12 @@ vim.g.go_gopls_gofumpt = 1
 
 -- language server
 local lspcfg = {
-  gopls =            {binary = 'gopls',                    format_on_save = nil         },
-  golangci_lint_ls = {binary = 'golangci-lint-langserver', format_on_save = nil         },
-  pylsp =            {binary = 'pylsp',                    format_on_save = '*.py'      },
-  pyright =          {binary = 'pyright',                  format_on_save = nil         },
-  rust_analyzer =    {binary = 'rust-analyzer',            format_on_save = '*.rs'      },
-  clojure_lsp =      {binary = 'clojure-lsp',              format_on_save = '*.clj'     },
+gopls =            {binary = 'gopls',                    format_on_save = nil         },
+-- golangci_lint_ls = {binary = 'golangci-lint-langserver', format_on_save = nil         },
+pylsp =            {binary = 'pylsp',                    format_on_save = '*.py'      },
+pyright =          {binary = 'pyright',                  format_on_save = nil         },
+rust_analyzer =    {binary = 'rust-analyzer',            format_on_save = '*.rs'      },
+clojure_lsp =      {binary = 'clojure-lsp',              format_on_save = '*.clj'     },
   yamlls =           {binary = 'yamlls',                   format_on_save = nil         },
   bashls =           {binary = 'bash-language-server',     format_on_save = nil         },
   dockerls =         {binary = 'docker-langserver',        format_on_save = 'Dockerfile'},
@@ -204,10 +219,10 @@ inoremap('<S-Tab>', '<C-v><Tab>')
 if vim.fn.has('unnamedplus') then vim.o.clipboard = 'unnamedplus' else vim.o.clipboard = 'unnamed' end
 
 -- airline
-vim.g.airline_theme = 'monochrome'
-vim.g.airline_powerline_fonts = '0'
-vim.cmd('let g:airline#extensions#tabline#enabled = 1')
-vim.cmd('let g:airline#extensions#tabline#buffer_nr_show = 1')
+-- vim.g.airline_theme = 'monochrome'
+-- vim.g.airline_powerline_fonts = '0'
+-- vim.cmd('let g:airline#extensions#tabline#enabled = 1')
+-- vim.cmd('let g:airline#extensions#tabline#buffer_nr_show = 1')
 
 -- tags
 snmap('<leader>o', ':TagbarToggle<CR>')
