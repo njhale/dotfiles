@@ -114,11 +114,15 @@ function load_packer_config(bootstrap)
           vim.g.go_gopls_gofumpt = 1
         end),
       },
+      {'kyazdani42/nvim-web-devicons',
+        config = exclude_on_bootstrap(function()
+            require('nvim-web-devicons').setup()
+        end),
+      },
       {'kyazdani42/nvim-tree.lua',
         tag = 'nightly', -- optional, updated every week. (see issue #1193)
-        -- requires = {'kyazdani42/nvim-web-devicons'},
+        requires = {'kyazdani42/nvim-web-devicons'},
         config = exclude_on_bootstrap(function()
-          -- require('nvim-web-devicons').setup()
           nnoremap('<c-n>', ':NvimTreeToggle<CR>')
           require('nvim-tree').setup({
             open_on_setup = true,
