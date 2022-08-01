@@ -133,7 +133,7 @@ function load_packer_config(bootstrap)
         'nvim-treesitter/nvim-treesitter',
         config = exclude_on_bootstrap(function()
           require('nvim-treesitter.configs').setup({
-            ensure_installed = 'all',
+            ensure_installed = { 'go' },
             auto_install = true,
 
             ignore_install = { "phpdoc" },
@@ -149,9 +149,18 @@ function load_packer_config(bootstrap)
           vim.g.SuperTabDefaultCompletionType = "<c-x><c-o>"
         end),
       },
+      {'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        config = exclude_on_bootstrap(function()
+          require('lualine').setup({
+            options = {
+              theme = 'tokyonight',
+            },
+          })
+        end)
+      },
       {'akinsho/bufferline.nvim',
         tag = "v2.*",
-        -- requires = {'kyazdani42/nvim-web-devicons'},
         config = exclude_on_bootstrap(function()
           nnoremap('gb', ':BufferLinePick<CR>')
           require('bufferline').setup({
