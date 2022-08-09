@@ -10,7 +10,7 @@ function dropit(appName)
           app:activate()
       end
   else
-      hs.application.launchOrFocus(appname)
+      hs.application.launchOrFocus(appName)
       app = hs.application.get(appName)
   end
 
@@ -34,3 +34,6 @@ hs.hotkey.bind({"cmd", "ctrl"}, "n", function()
   dropit("Notion")
 end)
 
+hs.hotkey.bind({"cmd", "ctrl"}, "l", function()
+  dropit("Linear")
+end)
