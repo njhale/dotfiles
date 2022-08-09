@@ -10,6 +10,7 @@ function nnoremap(lhs, rhs) vim.api.nvim_set_keymap('n', lhs, rhs, { noremap = t
 function inoremap(lhs, rhs) vim.api.nvim_set_keymap('i', lhs, rhs, { noremap = true }) end
 function bufsnoremap(lhs, rhs) vim.api.nvim_buf_set_keymap(0, 'n', lhs, rhs, { noremap = true, silent = true }) end
 function lspremap(keymap, fn_name) bufsnoremap(keymap, '<cmd>lua vim.lsp.' .. fn_name .. '()<CR>') end
+function vimremap(keymap, fn_name) bufsnoremap(keymap, '<cmd>lua vim.' .. fn_name .. '()<CR>') end
 
 -- misc global opts
 local settings = {
@@ -37,7 +38,6 @@ local settings = {
   'set showmode',
   'set smartcase',
   'set synmaxcol=2048',
-  -- 'set t_Co=256',
   'set title',
   'set ts=2 sts=2 sw=2 et ci',
   'set ttyfast',
@@ -47,6 +47,7 @@ local settings = {
   'set wrapscan',
   'set termguicolors',
   'set cpoptions+=_',
+  'set syntax=on',
 }
 for _, setting in ipairs(settings) do vim.cmd(setting) end
 
@@ -68,17 +69,15 @@ function load_packer_config(bootstrap)
   function exclude_on_bootstrap(fn) if not bootstrap then return fn end end
   return require('packer').startup(function(use)
     use {
+      'wbthomason/packer.nvim',
       'folke/which-key.nvim',
-      'jjo/vim-cue',
       'milkypostman/vim-togglelist',
       'ray-x/lsp_signature.nvim',
+      'lukas-reineke/indent-blankline.nvim',
       'tpope/vim-commentary',
       'tpope/vim-repeat',
       'tpope/vim-sleuth',
       'tpope/vim-surround',
-      'vim-scripts/a.vim',
-      'wbthomason/packer.nvim',
-
       {
         'tpope/vim-unimpaired',
         config = exclude_on_bootstrap(function()
@@ -107,38 +106,34 @@ function load_packer_config(bootstrap)
         end),
       },
       {
-        'fatih/vim-go',
-        config = exclude_on_bootstrap(function()
-          vim.g.go_echo_go_info = 0 -- https://github.com/fatih/vim-go/issues/2904#issuecomment-637102187
-          vim.g.go_fmt_command = 'gopls'
-          vim.g.go_gopls_gofumpt = 1
-        end),
-      },
-      {'kyazdani42/nvim-web-devicons',
+        'kyazdani42/nvim-web-devicons',
         config = exclude_on_bootstrap(function()
             require('nvim-web-devicons').setup()
         end),
       },
-      {'kyazdani42/nvim-tree.lua',
+      {
+        'kyazdani42/nvim-tree.lua',
         tag = 'nightly', -- optional, updated every week. (see issue #1193)
         requires = {'kyazdani42/nvim-web-devicons'},
         config = exclude_on_bootstrap(function()
           nnoremap('<c-n>', ':NvimTreeToggle<CR>')
           require('nvim-tree').setup({
             open_on_setup = true,
-          })
-        end),
-      },
-      {
-        'nvim-treesitter/nvim-treesitter',
-        config = exclude_on_bootstrap(function()
-          require('nvim-treesitter.configs').setup({
-            ensure_installed = { 'go' },
-            auto_install = true,
-
-            ignore_install = { "phpdoc" },
-            disable = { "phpdoc" },
-            highlight = { enable = true },
+            hijack_cursor = true,
+            hijack_unnamed_buffer_when_opening = true,
+            view = {
+              adaptive_size = true,
+            },
+            renderer = {
+              indent_markers = {
+                enable = true,
+              },
+            },
+            update_focused_file = {
+              enable = true,
+              update_root = false,
+              ignore_list = {},
+            },
           })
         end),
       },
@@ -149,38 +144,29 @@ function load_packer_config(bootstrap)
           vim.g.SuperTabDefaultCompletionType = "<c-x><c-o>"
         end),
       },
-      {'nvim-lualine/lualine.nvim',
+      {
+        'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true },
         config = exclude_on_bootstrap(function()
           require('lualine').setup({
             options = {
               theme = 'tokyonight',
+              -- globalstatus = true,
+            },
+            sections = {
+              lualine_a = {'mode'},
+              lualine_b = {'branch', 'diagnostics'},
+              lualine_c = {'filename'},
+              lualine_x = {'filetype', 'filesize'},
+              lualine_y = {'progress'},
+              lualine_z = {'location'},
+            },
+            extensions = {
+              'nvim-tree',
+              'quickfix',
             },
           })
         end)
-      },
-      {'akinsho/bufferline.nvim',
-        tag = "v2.*",
-        config = exclude_on_bootstrap(function()
-          nnoremap('gb', ':BufferLinePick<CR>')
-          require('bufferline').setup({
-            options = {
-              mode = 'buffers',
-              numbers = 'buffer_id',
-              offsets = {
-                {
-                  filetype = 'NvimTree',
-                  text = 'File Explorer',
-                  highlight = 'Directory',
-                },
-              },
-              show_tab_inicators = false,
-              show_buffer_icons = false,
-              show_buffer_close_icons = false,
-              separator_style = 'slant',
-            },
-          })
-        end),
       },
       {
         'majutsushi/tagbar',
@@ -201,8 +187,46 @@ function load_packer_config(bootstrap)
           nnoremap('<leader>d', "<cmd>lua require('telescope.builtin').diagnostics()<cr>")
         end),
       },
+      -- {
+      --   'fatih/vim-go',
+      --   config = exclude_on_bootstrap(function()
+      --     vim.g.go_echo_go_info = 0 -- https://github.com/fatih/vim-go/issues/2904#issuecomment-637102187
+      --     vim.g.go_fmt_command = 'gopls'
+      --     vim.g.go_gopls_gofumpt = 1
+      --   end),
+      -- },
+      {
+        'nvim-treesitter/nvim-treesitter',
+        config = exclude_on_bootstrap(function()
+          require('nvim-treesitter.configs').setup({
+            ensure_installed = { 'go' },
+            auto_install = true,
+            highlight = { enable = true },
+          })
+        end),
+      },
+      {
+        'williamboman/mason.nvim',
+        config = exclude_on_bootstrap(function()
+          -- automatic LSP server installation for lspconfig (1/2 requirements)
+          require('mason').setup()
+        end)
+      },
+      {
+        'williamboman/mason-lspconfig.nvim',
+        config = exclude_on_bootstrap(function()
+          -- automatic LSP server installation for lspconfig (2/2 requirements)
+          require('mason-lspconfig').setup({
+            automatic_installation = true,
+          })
+      end)
+      },
       {
         'neovim/nvim-lspconfig',
+        requires = {
+          {'williamboman/mason.nvim'},
+          {'williamboman/mason-lspconfig.nvim'},
+        },
         config = exclude_on_bootstrap(function()
           local lspcfg = {
             gopls =            {binary = 'gopls',                    format_on_save = nil         },
@@ -210,7 +234,6 @@ function load_packer_config(bootstrap)
             pylsp =            {binary = 'pylsp',                    format_on_save = '*.py'      },
             pyright =          {binary = 'pyright',                  format_on_save = nil         },
             rust_analyzer =    {binary = 'rust-analyzer',            format_on_save = '*.rs'      },
-            clojure_lsp =      {binary = 'clojure-lsp',              format_on_save = '*.clj'     },
             yamlls =           {binary = 'yamlls',                   format_on_save = nil         },
             bashls =           {binary = 'bash-language-server',     format_on_save = nil         },
             dockerls =         {binary = 'docker-langserver',        format_on_save = 'Dockerfile'},
@@ -250,40 +273,37 @@ function load_packer_config(bootstrap)
 
             -- unconditional keymaps
             lspremap('gl', 'diagnostic.show_line_diagnostics')
+            vimremap('gL', 'diagnostic.open_float')
           end
 
-          -- only setup lsp clients for binaries that exist
           local lsp = require('lspconfig')
           for srv, opts in pairs(lspcfg) do
-            if vim.fn.executable(opts['binary']) then lsp[srv].setup({ on_attach = custom_lsp_attach }) end
+            -- if vim.fn.executable(opts['binary']) then lsp[srv].setup({ on_attach = custom_lsp_attach }) end
+            -- don't worry about the binary existing, it should be auto-installed by mason-lspconfig
+            lsp[srv].setup({ on_attach = custom_lsp_attach })
           end
-        end),
+        end)
       },
-      {'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-        -- must be registered _after_ lspconfig
-        config = exclude_on_bootstrap(function()
-          require("lsp_lines").setup()
-          vim.keymap.set(
-            '',
-            '<Leader>l',
-            require('lsp_lines').toggle,
-            { desc = 'Toggle lsp_lines' }
-          )
-        end),
-      },
+      -- {
+      --   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+      --   -- must be registered _after_ lspconfig
+      --   config = exclude_on_bootstrap(function()
+      --     require("lsp_lines").setup()
+      --   end),
+      -- },
     }
   end)
 end
 
 -- bootstrap packer
-local packer_install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-if vim.fn.empty(vim.fn.glob(packer_install_path)) > 0 then
-  vim.fn.system('git clone --depth 1 https://github.com/wbthomason/packer.nvim ' .. packer_install_path)
+local fn = vim.fn
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
   vim.cmd [[packadd packer.nvim]]
   load_packer_config(true)
   require('packer').sync()
 else
-  print('load_packer_config(false)')
   load_packer_config(false)
 end
 
