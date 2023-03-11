@@ -18,13 +18,20 @@ function conditional_extend_path() {
 # brew installs some binaries like openvpn to /usr/local/sbin
 [[ $OSTYPE == darwin* ]] && extend_path "/usr/local/sbin"
 
+
+if type brew &> /dev/null; then
+  # Enable brew installed completions
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
 # zgen
 if [[ ! -d $HOME/.zgen ]]; then
-  git clone git@github.com:tarjoilija/zgen.git "$HOME/.zgen"
+  echo "predicate triggered"
+  git clone https://github.com/tarjoilija/zgen.git "$HOME/.zgen"
 fi
 export ZGEN_RESET_ON_CHANGE=($HOME/.zshrc)
-export ZGEN_PLUGIN_UPDATE_DAYS=30
-export ZGEN_SYSTEM_UPDATE_DAYS=30
+export ZGEN_PLUGIN_UPDATE_DAYS=15
+export ZGEN_SYSTEM_UPDATE_DAYS=15
 export NVM_LAZY_LOAD=true
 source "$HOME/.zgen/zgen.zsh"
 if ! zgen saved; then
@@ -59,23 +66,27 @@ if ! zgen saved; then
   zgen prezto 'module:editor' key-bindings 'vi'
   zgen prezto 'module:syntax-highlighting' highlighters 'main' 'brackets' 'pattern' 'cursor'
   zgen prezto 'module:terminal' auto-title 'yes'
-  if [[ $OSTYPE == darwin* ]]; then zgen prezto prompt theme 'sorin'; else zgen prezto prompt theme 'skwp'; fi
+  zgen prezto prompt theme 'pure'
   zgen save
 fi
 
 # disable ctrl+d EOF
 setopt ignoreeof
 
-# set vim as the default editor 
-export EDITOR=vim
+# prefer neovim as the default editor
+if which nvim > /dev/null; then
+  export EDITOR=nvim
+  alias vi=nvim
+  alias vim=nvim
+else
+  export EDITOR=vim
+  alias nvim=vim
+fi
 export GIT_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 
 # prefer GNU sed b/c BSD sed doesn't handle whitespace the same
 if which gsed > /dev/null; then export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"; fi
-
-# iTerm2 shell integration
-test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integration.zsh
 
 # rust (b/c rustup doesn't play well with the rust brew formulae)
 if ! which rustup > /dev/null; then
@@ -91,36 +102,4 @@ if which kubectl > /dev/null; then
   alias k=kubectl
   export KUBECONFIG="$HOME/.kube/config"
 fi
-
-
-export PATH=$PATH:/usr/local/kubebuilder/bin
-if ! which kubebuilder > /dev/null; then
-    os=$(go env GOOS)
-    arch=$(go env GOARCH)
-
-    # download kubebuilder and extract it to tmp
-    curl -L https://go.kubebuilder.io/dl/2.3.1/${os}/${arch} | tar -xz -C /tmp/
-
-    # move to a long-term location and put it on your path
-    # (you'll need to set the KUBEBUILDER_ASSETS env var if you put it somewhere else)
-    sudo mv /tmp/kubebuilder_2.3.1_${os}_${arch}/ /usr/local/kubebuilder
-fi
-
-# git aliases
-function checkout_remote_branch() {
-    local org="${1}"
-    local branch="${2}"
-    local repo="$(basename $(git rev-parse --show-toplevel))"
-
-    function clean() {
-        git remote remove "${1}"
-    }
-    trap "clean ${org}" EXIT
-
-    git remote add "${org}" "git@github.com:${org}/${repo}.git" && \
-        git fetch "${org}" "${branch}" && \
-        git switch --no-track -C "${org}_${branch}" "${org}/${branch}"
-}
-
-alias -g grb="checkout_remote_branch"
 

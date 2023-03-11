@@ -1,23 +1,29 @@
 [user]
-    email = njohnhale@gmail.com
+	email = 4175918+njhale@users.noreply.github.com
     name = Nick Hale
+[github]
+    user = njhale
 [color]
     ui = auto
 [core]
     safecrlf = true
-[github]
-    user = njhale 
 [diff]
-    algorithm = patience
-    compactionHeuristic = true
-    mnemonicprefix = true
+    tool = nvimdiff
+[difftool]
+    prompt = true
+[difftool "nvimdiff"]
+    cmd = nvim -d $LOCAL $REMOTE
 [merge]
-    tool = vimdiff
+    tool = nvimdiff
 [mergetool]
     prompt = true
-[mergetool "vimdiff"]
-    cmd = vim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[mergetool "nvimdiff"]
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [pull]
     ff = only
 [alias]
 	dag = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(cyan)%aD%C(reset) %C(green)(%ar)%C(reset)%C(yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(white)- %an%C(reset)'
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[init]
+	defaultBranch = main
