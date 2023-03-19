@@ -16,7 +16,6 @@ special[nvim]="${XDG_CONFIG_HOME}/nvim"
 special[.git]='SKIP'
 special[Brewfile]='SKIP'
 special[README.md]='SKIP'
-special[monokai-soda.itermcolors]='SKIP'
 special[install.zsh]='SKIP'
 
 echo "Linking dotfiles..."
