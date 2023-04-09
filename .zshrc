@@ -103,7 +103,7 @@ if which kubectl > /dev/null; then
   export KUBECONFIG="$HOME/.kube/config"
 fi
 
-# acorn shell completion
+# acorn dev path and shell completion
 if [ -d "/Users/nick/projects/acorn-io/acorn/bin" ]
 then
   export PATH="/Users/nick/projects/acorn-io/acorn/bin:$PATH"
