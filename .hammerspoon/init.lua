@@ -31,3 +31,7 @@ end)
 hs.hotkey.bind({ "cmd", "ctrl" }, "n", function()
 	DropIt("Notion")
 end)
+
+hs.hotkey.bind({ "cmd", "ctrl" }, "o", function()
+	DropIt("Obsidian")
+end)
