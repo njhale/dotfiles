@@ -104,13 +104,13 @@ if which kubectl > /dev/null; then
 fi
 
 # acorn dev path and shell completion
-if [ -d "/Users/nick/projects/acorn-io/acorn/bin" ]
+if [ -d "/Users/njhale/projects/acorn" ]
 then
-  export PATH="/Users/nick/projects/acorn-io/acorn/bin:$PATH"
+  export PATH="/Users/njhale/projects/acorn/bin:$PATH"
   source <(acorn completion zsh)
 fi
 
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/nick/.rd/bin:$PATH"
+export PATH="/Users/njhale/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
