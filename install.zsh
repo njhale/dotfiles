@@ -33,3 +33,15 @@ for FILE in $DOTFILES_DIR/*(D); do;
     fi
 done
 
+echo "Ensuring ssh signing key for git config..."
+git config --global user.signingkey ~/.ssh/github
+
+echo "Ensuring allowed_signers file for git config..."
+local allowed_signers=~/.ssh/allowed_signers
+if [ ! -f $allowed_signers ]; then
+  touch $allowed_signers
+  git config --global gpg.ssh.allowedSignersFile $allowed_signers 
+  echo "$(git config --get user.email) namespaces=\"git\" $(cat ~/.ssh/github.pub)" >> $allowed_signers
+fi
+
+
