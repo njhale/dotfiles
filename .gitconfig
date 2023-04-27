@@ -39,3 +39,5 @@
 	gpgsign = true
 [gpg "ssh"]
 	allowedSignersFile = /Users/nick/.ssh/allowed_signers
+[fetch]
+	prune = true
