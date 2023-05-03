@@ -24,6 +24,10 @@ hs.hotkey.bind({ "cmd", "ctrl" }, "s", function()
 	DropIt("Slack")
 end)
 
+hs.hotkey.bind({ "cmd", "ctrl" }, "f", function()
+	DropIt("Firefox")
+end)
+
 hs.hotkey.bind({ "cmd", "ctrl" }, "a", function()
 	DropIt("Arc")
 end)
