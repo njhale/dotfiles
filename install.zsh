@@ -6,14 +6,13 @@ setopt EXTENDED_GLOB
 local DOTFILES_DIR="$(cd $(dirname ${BASH_SOURCE[0]-$0}) && pwd)"
 
 # Default config variables 
-local XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+local XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 local INSTALL_DIR="${INSTALL_DIR:-$HOME}"
 
 # Symlink dotfiles
 declare -A special
 special[kitty]="${XDG_CONFIG_HOME}/kitty"
 special[nvim]="${XDG_CONFIG_HOME}/nvim"
-special[starship.toml]="${XDG_CONFIG_HOME}/starship.toml"
 special[.git]='SKIP'
 special[Brewfile]='SKIP'
 special[README.md]='SKIP'
