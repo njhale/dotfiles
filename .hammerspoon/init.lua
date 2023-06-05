@@ -35,3 +35,7 @@ end)
 hs.hotkey.bind({ "cmd", "ctrl" }, "n", function()
 	DropIt("Notion")
 end)
+
+hs.hotkey.bind({ "cmd", "ctrl" }, "t", function()
+	DropIt("Things")
+end)
