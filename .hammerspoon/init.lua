@@ -39,3 +39,11 @@ end)
 hs.hotkey.bind({ "cmd", "ctrl" }, "t", function()
 	DropIt("Things")
 end)
+
+hs.hotkey.bind({ "cmd", "ctrl" }, "c", function()
+	DropIt("Clock")
+end)
+
+hs.hotkey.bind({ "cmd", "ctrl" }, "g", function()
+	DropIt("GoLand")
+end)
