@@ -104,9 +104,9 @@ if which kubectl > /dev/null; then
 fi
 
 # acorn dev path and shell completion
-if [ -d "/Users/nick/projects/acorn-io/acorn/bin" ]
+if [ -d "/Users/nick/projects/acorn-io/runtime/bin" ]
 then
-  export PATH="/Users/nick/projects/acorn-io/acorn/bin:$PATH"
+  export PATH="/Users/nick/projects/acorn-io/runtime/bin:$PATH"
   source <(acorn completion zsh)
 fi
 
