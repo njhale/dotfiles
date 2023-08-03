@@ -85,6 +85,12 @@ fi
 export GIT_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 
+# add GoLand to the path if it exists
+if [ -d "/Applications/GoLand.app/Contents/MacOS" ]
+then
+  export PATH="/Applications/GoLand.app/Contents/MacOS:$PATH"
+fi
+
 # prefer GNU sed b/c BSD sed doesn't handle whitespace the same
 if which gsed > /dev/null; then export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"; fi
 
@@ -94,7 +100,7 @@ if ! which rustup > /dev/null; then
 fi
 
 # set GOPATH and GOBIN
-export GOPATH="$HOME/go"
+# export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 
 # kubernetes
