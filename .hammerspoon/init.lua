@@ -28,6 +28,10 @@ hs.hotkey.bind({ "cmd", "ctrl" }, "c", function()
 	DropIt("Chrome")
 end)
 
+hs.hotkey.bind({ "cmd", "ctrl" }, "f", function()
+	DropIt("Firefox")
+end)
+
 hs.hotkey.bind({ "cmd", "ctrl" }, "n", function()
 	DropIt("Notion")
 end)
