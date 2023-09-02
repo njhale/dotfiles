@@ -9,7 +9,7 @@
 [core]
     safecrlf = true
 [diff]
-    tool = nvimdiff
+	tool = nvimdiff
 [difftool]
     prompt = true
 [difftool "nvimdiff"]
