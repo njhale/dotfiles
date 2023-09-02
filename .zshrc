@@ -116,7 +116,9 @@ then
   source <(acorn completion zsh)
 fi
 
-
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/nick/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+eval "$(direnv hook zsh)"
+
