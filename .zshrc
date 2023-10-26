@@ -109,16 +109,14 @@ if which kubectl > /dev/null; then
   export KUBECONFIG="$HOME/.kube/config"
 fi
 
-# acorn dev path and shell completion
-if [ -d "/Users/nick/projects/acorn-io/runtime/bin" ]
-then
-  export PATH="/Users/nick/projects/acorn-io/runtime/bin:$PATH"
+if which acorn > /dev/null; then
   source <(acorn completion zsh)
 fi
+
+eval "$(direnv hook zsh)"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/nick/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-eval "$(direnv hook zsh)"
 
