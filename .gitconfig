@@ -8,6 +8,7 @@
     ui = auto
 [core]
     safecrlf = true
+	excludesfile = /Users/nick/.dotfiles/.gitignore_global
 [diff]
 	tool = nvimdiff
 [difftool]
