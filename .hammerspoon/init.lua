@@ -25,7 +25,7 @@ hs.hotkey.bind({ "cmd", "ctrl" }, "s", function()
 end)
 
 hs.hotkey.bind({ "cmd", "ctrl" }, "c", function()
-	DropIt("Chrome")
+	DropIt("code")
 end)
 
 hs.hotkey.bind({ "cmd", "ctrl" }, "f", function()
