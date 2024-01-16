@@ -113,10 +113,6 @@ if which acorn > /dev/null; then
   source <(acorn completion zsh)
 fi
 
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+
 eval "$(direnv hook zsh)"
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/nick/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-

@@ -20,6 +20,10 @@ hs.hotkey.bind({ "cmd", "ctrl" }, "k", function()
 	DropIt("kitty")
 end)
 
+hs.hotkey.bind({ "cmd", "ctrl" }, "d", function()
+	DropIt("Discord")
+end)
+
 hs.hotkey.bind({ "cmd", "ctrl" }, "s", function()
 	DropIt("Slack")
 end)
