@@ -47,3 +47,7 @@ end)
 hs.hotkey.bind({ "cmd", "ctrl" }, "g", function()
 	DropIt("GoLand")
 end)
+
+hs.hotkey.bind({ "cmd", "ctrl" }, "h", function()
+	DropIt("Gather")
+end)

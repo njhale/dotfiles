@@ -56,9 +56,9 @@ if ! zgen saved; then
   zgen prezto spectrum
   zgen prezto utility
   zgen prezto completion
-  zgen prezto prompt
+  # zgen prezto prompt
   zgen prezto syntax-highlighting
-  zgen prezto git
+  # zgen prezto git
   zgen prezto editor key-bindings 'vi'
   zgen prezto '*:*' case-sensitive 'no'
   zgen prezto '*:*' color 'yes'
@@ -66,7 +66,7 @@ if ! zgen saved; then
   zgen prezto 'module:editor' key-bindings 'vi'
   zgen prezto 'module:syntax-highlighting' highlighters 'main' 'brackets' 'pattern' 'cursor'
   zgen prezto 'module:terminal' auto-title 'yes'
-  zgen prezto prompt theme 'pure'
+  # zgen prezto prompt theme 'pure'
   zgen save
 fi
 
@@ -110,9 +110,15 @@ if which kubectl > /dev/null; then
 fi
 
 if which acorn > /dev/null; then
+  alias a=acorn
   source <(acorn completion zsh)
 fi
 
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
+
+# Enable direnv (directory-specific environment variables) 
 eval "$(direnv hook zsh)"
+
+# Enable starship (prompt styling)
+eval "$(starship init zsh)"

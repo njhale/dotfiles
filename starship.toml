@@ -1,0 +1,46 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$custom\
+$direnv\
+$env_var\
+$sudo\
+$cmd_duration\
+$line_break\
+$status\
+$shell\
+$character"""
+
+add_newline = false
+
+[git_status]
+format = '([$conflicted$deleted$renamed$untracked$modified$staged$ahead_behind]($style) )'
+modified = '*'
+untracked = '?'
+
+
+[git_branch]
+format = '([$symbol$branch(:$remote_branch)]($style) )'
+symbol = " "
+style = "bold purple"
+
+[git_commit]
+commit_hash_length = 7
+tag_symbol = ' '
+disabled = false
+
+[custom.acorn]
+command = "yq '.currentProject' $ACORN_CONFIG_FILE"
+when = """ [ -n "$ACORN_CONFIG_FILE" ] """
+style = "bold blue"
+symbol = ' '
+format = '([$symbol$output]($style) )'
+ignore_timeout = true
+
