@@ -6,14 +6,9 @@ function extend_path() {
   [[ ":$PATH:" != *":$1:"* ]] && export PATH="$1:$PATH"
 }
 
-# add the argument's directory to $PATH if the argument exists
-function conditional_extend_path() {
-  [[ -a $1 ]] && extend_path $(dirname $1)
-}
-
 # add ~/bin and ~/.local/bin to $PATH if they exist
-[[ -d "$HOME/bin" ]] && extend_path "$HOME/bin"
-[[ -d "$HOME/.local/bin" ]] && extend_path "$HOME/.local/bin"
+extend_path "$HOME/bin"
+extend_path "$HOME/.local/bin"
 
 # brew installs some binaries like openvpn to /usr/local/sbin
 [[ $OSTYPE == darwin* ]] && extend_path "/usr/local/sbin"
@@ -86,21 +81,17 @@ export GIT_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 
 # add GoLand to the path if it exists
-if [ -d "/Applications/GoLand.app/Contents/MacOS" ]
-then
-  export PATH="/Applications/GoLand.app/Contents/MacOS:$PATH"
-fi
+extend_path "/Applications/GoLand.app/Contents/MacOS"
 
 # prefer GNU sed b/c BSD sed doesn't handle whitespace the same
-if which gsed > /dev/null; then export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"; fi
+if which gsed > /dev/null; then extend_path "/usr/local/opt/gnu-sed/libexec/gnubin"; fi
 
 # rust (b/c rustup doesn't play well with the rust brew formulae)
 if ! which rustup > /dev/null; then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 
-# set GOPATH and GOBIN
-# export GOPATH="$HOME/go"
+# set GOBIN
 export GOBIN="$GOPATH/bin"
 
 # kubernetes
@@ -109,16 +100,17 @@ if which kubectl > /dev/null; then
   export KUBECONFIG="$HOME/.kube/config"
 fi
 
+# acorn
 if which acorn > /dev/null; then
   alias a=acorn
   source <(acorn completion zsh)
 fi
 
-export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+# add mysql-client to the path if it exists
+extend_path "/usr/local/opt/mysql-client/bin"
 
-
-# Enable direnv (directory-specific environment variables) 
+# enable direnv (directory-specific environment variables) 
 eval "$(direnv hook zsh)"
 
-# Enable starship (prompt styling)
+# enable starship (prompt styling)
 eval "$(starship init zsh)"

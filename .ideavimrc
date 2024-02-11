@@ -1,0 +1,94 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+Plug 'machakann/vim-highlightedyank'
+
+" Space as leader key
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
+" Options
+" set	clipboard="unnamedplus"
+set clipboard+=unnamed
+set fileencoding="utf-8"
+set hlsearch
+set ignorecase
+set smartcase
+set smartindent
+set splitbelow
+set splitright
+set noswapfile
+set undofile
+set undolevels=10000
+set undoreload=10000
+set expandtab
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set cursorline
+set number
+set norelativenumber
+set wrap
+set nolinebreak
+set scrolloff=8
+set sidescrolloff=8
+set showmode
+
+" Recommended ideavim settings
+set ideajoin
+set ideaput
+set ideamarks
+
+" Plugins
+set surround
+set NERDTree
+set commentary
+set highlightedyank
+
+" Code navigation keymaps
+" nmap gb <Action>(Back)
+" nmap gf <Action>(Forward)
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
+nmap gd <Action>(GotoDeclaration)
+nmap gI <Action>(GotoImplementation)
+nmap gu <Action>(FindUsages)
+nmap gl <Action>(ShowErrorDescription)
+
+" Other windows access
+nmap <Leader>e :NERDTreeFocus<CR>
+nmap <Leader>s <Action>(FileStructurePopup)
+nmap <Leader><Space> <Action>(SearchEverywhere)
+nmap <Leader>fg <Action>(FindInPath)
+nmap <Leader>b :buffers<cr>
+nmap <Leader>r :registers<cr>
+nmap <Leader>al :actionlist<space>
+nmap <Leader>xx <Action>(ActivateProblemsViewToolWindow)
+nmap <Leader>wr <Action>(ActivateRunToolWindow)
+nmap <Leader>wg <Action>(ActivateVersionControlToolWindow)
+nmap <Leader>wc <Action>(ActivateCommitToolWindow)
+nmap <Leader>wn <Action>(ActivateNotificationsToolWindow)
+nmap <Leader>wnc <Action>(ClearAllNotifications)
+
+" Perform actions in code
+nmap <Leader>ca <Action>(ShowIntentionActions)
+nmap <Leader>cr <Action>(RenameElement)
+nmap <Leader>cf <Action>(ReformatCode)
+nmap <Leader>cg <Action>(Generate)
+vmap <Leader>cv <Action>(IntroduceVariable)
+vmap <Leader>cm <Action>(ExtractMethod)
