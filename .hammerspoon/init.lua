@@ -28,8 +28,12 @@ hs.hotkey.bind({ "cmd", "ctrl" }, "s", function()
 	DropIt("Slack")
 end)
 
-hs.hotkey.bind({ "cmd", "ctrl" }, "c", function()
+hs.hotkey.bind({ "cmd", "ctrl" }, "v", function()
 	DropIt("code")
+end)
+
+hs.hotkey.bind({ "cmd", "ctrl" }, "c", function()
+	DropIt("Chrome")
 end)
 
 hs.hotkey.bind({ "cmd", "ctrl" }, "f", function()
