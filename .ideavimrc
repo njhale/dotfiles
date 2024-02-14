@@ -23,52 +23,38 @@ nnoremap <SPACE> <Nop>
 let mapleader=" "
 
 " Options
-" set	clipboard="unnamedplus"
 set clipboard+=unnamed
-set fileencoding="utf-8"
 set hlsearch
 set ignorecase
 set smartcase
-set smartindent
-set splitbelow
-set splitright
-set noswapfile
-set undofile
+set notimeout
+set timeoutlen=5000
 set undolevels=10000
-set undoreload=10000
-set expandtab
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set cursorline
 set number
 set norelativenumber
-set wrap
-set nolinebreak
 set scrolloff=8
 set sidescrolloff=8
 set showmode
 
 " Recommended ideavim settings
 set ideajoin
-set ideaput
 set ideamarks
 
 " Plugins
 set surround
 set NERDTree
 set commentary
+set which-key
 set highlightedyank
 
 " Code navigation keymaps
-" nmap gb <Action>(Back)
-" nmap gf <Action>(Forward)
 nmap <C-o> <Action>(Back)
 nmap <C-i> <Action>(Forward)
 nmap gd <Action>(GotoDeclaration)
 nmap gI <Action>(GotoImplementation)
 nmap gu <Action>(FindUsages)
 nmap gl <Action>(ShowErrorDescription)
+map gh <Action>(CallHierarchy)
 
 " Other windows access
 nmap <Leader>e :NERDTreeFocus<CR>
@@ -88,6 +74,7 @@ nmap <Leader>wnc <Action>(ClearAllNotifications)
 " Perform actions in code
 nmap <Leader>ca <Action>(ShowIntentionActions)
 nmap <Leader>cr <Action>(RenameElement)
+
 nmap <Leader>cf <Action>(ReformatCode)
 nmap <Leader>cg <Action>(Generate)
 vmap <Leader>cv <Action>(IntroduceVariable)
