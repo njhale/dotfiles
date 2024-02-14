@@ -55,3 +55,7 @@ end)
 hs.hotkey.bind({ "cmd", "ctrl" }, "h", function()
 	DropIt("Gather")
 end)
+
+hs.hotkey.bind({ "cmd", "ctrl" }, "m", function()
+	DropIt("Messages")
+end)
