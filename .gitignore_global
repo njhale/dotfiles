@@ -1,3 +1,4 @@
 .idea/
 .acornconfig.json
 .envrc
+.mom.local*
