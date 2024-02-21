@@ -36,11 +36,3 @@ commit_hash_length = 7
 tag_symbol = ' '
 disabled = false
 
-[custom.acorn]
-command = "yq '.currentProject' $ACORN_CONFIG_FILE"
-when = """ [ -n "$ACORN_CONFIG_FILE" ] """
-style = "bold blue"
-symbol = ' '
-format = '([$symbol$output]($style) )'
-ignore_timeout = true
-
