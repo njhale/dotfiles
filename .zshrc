@@ -92,7 +92,9 @@ if ! which rustup > /dev/null; then
 fi
 
 # set GOBIN
-export GOBIN="$GOPATH/bin"
+export GOBIN="$(go env GOPATH)/bin"
+extend_path "$(go env GOBIN)"
+
 
 # kubernetes
 if which kubectl > /dev/null; then
@@ -114,3 +116,9 @@ eval "$(direnv hook zsh)"
 
 # enable starship (prompt styling)
 eval "$(starship init zsh)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/nick/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nick/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/nick/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nick/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

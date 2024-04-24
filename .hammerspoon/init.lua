@@ -52,8 +52,8 @@ hs.hotkey.bind({ "cmd", "ctrl" }, "g", function()
 	DropIt("GoLand")
 end)
 
-hs.hotkey.bind({ "cmd", "ctrl" }, "h", function()
-	DropIt("Gather")
+hs.hotkey.bind({ "cmd", "ctrl" }, "p", function()
+	DropIt("PyCharm")
 end)
 
 hs.hotkey.bind({ "cmd", "ctrl" }, "m", function()
