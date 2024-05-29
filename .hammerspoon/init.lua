@@ -1,61 +1,50 @@
-function DropIt(appName)
-	local app = hs.application.get(appName)
+function FocusApp(appName)
+	local function tryFocus(attempts)
+		local app = hs.application.find(appName)
 
-	if app then
-		if not app:mainWindow() then
-			app:selectMenuItem({ appName, "New OS window" })
-		elseif app:isFrontmost() then
-			app:hide()
+		if app then
+			local win = app:mainWindow()
+			if not win then
+				app:selectMenuItem({ appName, "New OS window" })
+			elseif app:isFrontmost() then
+				app:hide()
+			else
+				app:activate()
+			end
 		else
-			app:activate()
+			if attempts > 0 then
+				hs.application.launchOrFocus(appName)
+				hs.timer.doAfter(0.1, function()
+					tryFocus(attempts - 1)
+				end)
+			else
+				hs.alert.show("Failed to launch " .. appName)
+			end
 		end
-	else
-		hs.application.launchOrFocus(appName)
-		app:mainWindow().setShadows(false)
-		app = hs.application.get(appName)
 	end
+
+	tryFocus(64)
 end
 
-hs.hotkey.bind({ "cmd", "ctrl" }, "k", function()
-	DropIt("kitty")
-end)
+-- Bindings for other applications without transparency
+local appBindings = {
+	{ key = "k", app = "kitty" },
+	{ key = "d", app = "Discord" },
+	{ key = "s", app = "Slack" },
+	{ key = "v", app = "Visual Studio Code" },
+	{ key = "c", app = "Google Chrome" },
+	{ key = "t", app = "Clock" },
+	{ key = "f", app = "Firefox" },
+	{ key = "n", app = "Notion" },
+	{ key = "g", app = "GoLand" },
+	{ key = "p", app = "PyCharm" },
+	{ key = "m", app = "Messages" },
+}
 
-hs.hotkey.bind({ "cmd", "ctrl" }, "d", function()
-	DropIt("Discord")
-end)
+hs.application.enableSpotlightForNameSearches(true)
 
-hs.hotkey.bind({ "cmd", "ctrl" }, "s", function()
-	DropIt("Slack")
-end)
-
-hs.hotkey.bind({ "cmd", "ctrl" }, "v", function()
-	DropIt("code")
-end)
-
-hs.hotkey.bind({ "cmd", "ctrl" }, "c", function()
-	DropIt("Chrome")
-end)
-
-hs.hotkey.bind({ "cmd", "ctrl" }, "f", function()
-	DropIt("Firefox")
-end)
-
-hs.hotkey.bind({ "cmd", "ctrl" }, "n", function()
-	DropIt("Notion")
-end)
-
-hs.hotkey.bind({ "cmd", "ctrl" }, "t", function()
-	DropIt("Things")
-end)
-
-hs.hotkey.bind({ "cmd", "ctrl" }, "g", function()
-	DropIt("GoLand")
-end)
-
-hs.hotkey.bind({ "cmd", "ctrl" }, "p", function()
-	DropIt("PyCharm")
-end)
-
-hs.hotkey.bind({ "cmd", "ctrl" }, "m", function()
-	DropIt("Messages")
-end)
+for _, binding in ipairs(appBindings) do
+	hs.hotkey.bind({ "cmd", "ctrl" }, binding.key, function()
+		FocusApp(binding.app)
+	end)
+end
