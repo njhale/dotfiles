@@ -102,12 +102,6 @@ if which kubectl > /dev/null; then
   export KUBECONFIG="$HOME/.kube/config"
 fi
 
-# acorn
-if which acorn > /dev/null; then
-  alias a=acorn
-  source <(acorn completion zsh)
-fi
-
 # add mysql-client to the path if it exists
 extend_path "/usr/local/opt/mysql-client/bin"
 
@@ -122,3 +116,10 @@ if [ -f '/Users/nick/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nick/googl
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/nick/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nick/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Enable completion
+autoload -Uz compinit
+compinit
+
+# Add Homebrew's zsh completion directory to fpath
+fpath=($fpath /opt/homebrew/share/zsh/site-functions)
