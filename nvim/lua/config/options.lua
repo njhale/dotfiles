@@ -4,5 +4,7 @@
 
 local opt = vim.opt
 
-opt.relativenumber = false
 opt.swapfile = false
+opt.autowrite = false
+opt.relativenumber = false
+opt.showtabline = 0
