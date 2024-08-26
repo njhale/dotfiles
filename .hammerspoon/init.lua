@@ -40,6 +40,7 @@ local appBindings = {
 	{ key = "p", app = "PyCharm" },
 	{ key = "m", app = "Messages" },
 	{ key = "e", app = "WebStorm" },
+	{ key = "o", app = "Microsoft Outlook" },
 }
 
 hs.application.enableSpotlightForNameSearches(true)
