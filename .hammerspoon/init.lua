@@ -39,7 +39,7 @@ local appBindings = {
 	{ key = "g", app = "GoLand" },
 	{ key = "p", app = "PyCharm" },
 	{ key = "m", app = "Messages" },
-	{ key = "w", app = "WebStorm" },
+	{ key = "e", app = "WebStorm" },
 }
 
 hs.application.enableSpotlightForNameSearches(true)
