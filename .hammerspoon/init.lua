@@ -41,6 +41,8 @@ local appBindings = {
 	{ key = "m", app = "Messages" },
 	{ key = "e", app = "WebStorm" },
 	{ key = "o", app = "Microsoft Outlook" },
+	{ key = "x", app = "Cursor" },
+	{ key = "z", app = "Zoom" },
 }
 
 hs.application.enableSpotlightForNameSearches(true)
