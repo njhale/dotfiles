@@ -43,6 +43,7 @@ local appBindings = {
 	{ key = "o", app = "Microsoft Outlook" },
 	{ key = "x", app = "Cursor" },
 	{ key = "z", app = "Zoom" },
+	{ key = "[", app = "Postman" },
 }
 
 hs.application.enableSpotlightForNameSearches(true)
