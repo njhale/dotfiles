@@ -13,6 +13,7 @@ local INSTALL_DIR="${INSTALL_DIR:-$HOME}"
 declare -A special
 special[kitty]="${XDG_CONFIG_HOME}/kitty"
 special[nvim]="${XDG_CONFIG_HOME}/nvim"
+special[helix]="${XDG_CONFIG_HOME}/helix"
 special[starship.toml]="${XDG_CONFIG_HOME}/starship.toml"
 special[.git]='SKIP'
 special[Brewfile]='SKIP'

@@ -123,3 +123,4 @@ compinit
 
 # Add Homebrew's zsh completion directory to fpath
 fpath=($fpath /opt/homebrew/share/zsh/site-functions)
+. "/Users/nick/.deno/env"
