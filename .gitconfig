@@ -24,7 +24,14 @@
 [pull]
     ff = only
 [alias]
+  aliases = config --get-regexp ^alias
 	dag = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(cyan)%aD%C(reset) %C(green)(%ar)%C(reset)%C(yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(white)- %an%C(reset)'
+  cb = rev-parse --abbrev-ref HEAD
+  ch = rev-parse HEAD
+  fum = fetch upstream main
+  pump = "!git checkout main && git fetch upstream main && git pull upstream main && git push -u origin $(git cb)"
+  rum = "!git fetch upstream main && git rebase -i upstream/main"
+  fpo = "!git fetch origin $(git cb) && git push -f -u origin $(git cb)"
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 [init]

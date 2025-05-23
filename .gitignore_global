@@ -1,3 +1,18 @@
+# Common repo-scoped IDE config directories.
 .idea/
-.envrc
 .vscode/
+__debug_bin*
+.run/
+
+# Custom environment variables.
+.envrc
+
+# Language cache and dependencies directories that I don't use often
+# and usually forget to ignore.
+__pycache__
+node_modules
+
+# My personal "experimental" file prefix/suffix lets me drop custom scripts
+# and tooling into any repo without having to ignore them on a per-repo basis.
+njhale.x*
+*.x.njhale

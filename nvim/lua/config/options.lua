@@ -8,3 +8,5 @@ opt.swapfile = false
 opt.autowrite = false
 opt.relativenumber = false
 opt.showtabline = 0
+
+vim.g.autoformat = false

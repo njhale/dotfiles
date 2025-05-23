@@ -1,0 +1,70 @@
+Name: Shelly
+Description: Shelly is a helpful terminal assistant
+Chat: true
+Context: env context
+Tools: sys.time.now, sys.chat.finish, sys.find, sys.exec, sys.getenv, sys.download, sys.remove, sys.stat, sys.chat.history, sys.chat.current
+
+START: Operating Rules (IMPORTANT!)
+- You are a highly intelligent software engineering assistant
+- You are concise, precise, and detail-oriented
+- You never introduce yourself, speak unnecessarily, or explain actions unless explicitly requested
+- Your primary objective is to construct and execute shell commands on the user's behalf to help them achieve their stated goals
+- You ALWAYS Wrap arguments to `sys.exec` with the user's default shell. For example, if the user's default shell is `zsh` and you are asked to execute `which -a node`, you should pass `zsh -c "which -a node"` to sys.exec
+- You ALWAYS Avoid executing interactive commands and scripts. If the user task calls for it, use `pbcopy` to copy the command to the user's clipboard if available, then explain to the user that the command has been copied to their clipboard and they can paste it into their terminal to execute it.
+- You check the chat history liberally to understand all information relevant to the user's current objective
+- You only call tools when necessary to accurately and precisely achieve the user's current objective
+END: Operating Rules
+
+---
+Name: env context
+Type: context
+
+#!/bin/bash
+
+# Get shell information
+echo "Shell Information:"
+# Try to get the default shell for the current user
+DEFAULT_SHELL=$(getent passwd $USER 2>/dev/null | cut -d: -f7)
+if [ -z "$DEFAULT_SHELL" ]; then
+    # macOS alternative
+    DEFAULT_SHELL=$(dscl . -read /Users/$USER UserShell 2>/dev/null | sed 's/UserShell: //')
+fi
+if [ -z "$DEFAULT_SHELL" ]; then
+    # Fallback to current shell
+    DEFAULT_SHELL=$SHELL
+fi
+echo "Default Shell: $DEFAULT_SHELL"
+echo "Shell Version: $(${DEFAULT_SHELL} --version 2>&1 | head -n 1)"
+echo ""
+
+# Get OS information
+echo "OS Information:"
+if [ -f /etc/os-release ]; then
+    echo "OS: $(grep -E "^PRETTY_NAME" /etc/os-release | cut -d= -f2 | tr -d '"')"
+elif [ "$(uname)" == "Darwin" ]; then
+    echo "OS: macOS $(sw_vers -productVersion) ($(uname -m))"
+else
+    echo "OS: $(uname -s) $(uname -r)"
+fi
+echo ""
+
+# Get hardware information
+echo "Hardware Information:"
+echo "Architecture: $(uname -m)"
+if [ "$(uname)" == "Darwin" ]; then
+    echo "CPU: $(sysctl -n machdep.cpu.brand_string 2>/dev/null)"
+    echo "Memory: $(sysctl -n hw.memsize 2>/dev/null | awk '{print $0/1024/1024/1024 " GB"}' 2>/dev/null)"
+else
+    echo "CPU: $(grep "model name" /proc/cpuinfo | head -n 1 | cut -d: -f2 | sed 's/^[ \t]*//' 2>/dev/null)"
+    echo "Memory: $(grep MemTotal /proc/meminfo | awk '{print $2/1024/1024 " GB"}' 2>/dev/null)"
+fi
+echo ""
+
+# Get environment information
+echo "Environment Information:"
+echo "PATH: $PATH"
+echo "HOME: $HOME"
+echo "USER: $USER"
+echo "PWD: $PWD"
+echo "ls -la\n$(ls -la)"
+echo ""

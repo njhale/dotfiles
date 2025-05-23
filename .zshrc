@@ -102,6 +102,12 @@ if which kubectl > /dev/null; then
   export KUBECONFIG="$HOME/.kube/config"
 fi
 
+
+# Add shelly command to run gptscript with the current working directory and assistants file
+shelly() {
+    gptscript --disable-cache --workspace "$(pwd)" "${HOME}/.dotfiles/shelly.gpt"
+}
+
 # add mysql-client to the path if it exists
 extend_path "/usr/local/opt/mysql-client/bin"
 
@@ -117,10 +123,32 @@ if [ -f '/Users/nick/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nick/googl
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/nick/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nick/google-cloud-sdk/completion.zsh.inc'; fi
 
-# Enable completion
+# Enable completions
 autoload -Uz compinit
 compinit
 
 # Add Homebrew's zsh completion directory to fpath
 fpath=($fpath /opt/homebrew/share/zsh/site-functions)
 . "/Users/nick/.deno/env"
+
+# Command for running make against my personal repo-scoped Makefiles.
+xmake() {
+  make -f njhale.x.Makefile "$@"
+}
+
+# Add make completions for custom xmake command.
+_xmake() {
+  local targets
+  # Extract explicitly defined targets from the Makefile
+  targets=$(awk -F: '/^[a-zA-Z0-9][^:]*:([^=]|$)/ {print $1}' njhale.x.Makefile | sort -u)
+
+  # Add the targets to completions
+  compadd -- ${=targets}
+}
+
+# Link the custom completion function to xmake
+compdef _xmake xmake
+
+
+# Added by Windsurf
+export PATH="/Users/nick/.codeium/windsurf/bin:$PATH"
