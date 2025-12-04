@@ -16,3 +16,6 @@ node_modules
 # and tooling into any repo without having to ignore them on a per-repo basis.
 njhale.x*
 *.x.njhale
+
+# Claude Code files
+CLAUDE.md
