@@ -34,12 +34,10 @@ local appBindings = {
 	{ key = "c", app = "Google Chrome" },
 	{ key = "t", app = "Clock" },
 	{ key = "n", app = "Notion" },
-	{ key = "g", app = "GoLand" },
 	{ key = "m", app = "Messages" },
 	{ key = "o", app = "Microsoft Outlook" },
-	{ key = "x", app = "Cursor" },
+	{ key = "e", app = "Zed" },
 	{ key = "z", app = "Zoom" },
-	{ key = "[", app = "Postman" },
 }
 
 hs.application.enableSpotlightForNameSearches(true)
