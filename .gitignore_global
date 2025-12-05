@@ -1,4 +1,5 @@
 # Common repo-scoped IDE config directories.
+.zed/
 .idea/
 .vscode/
 __debug_bin*
@@ -19,3 +20,4 @@ njhale.x*
 
 # Claude Code files
 CLAUDE.md
+.claude/
