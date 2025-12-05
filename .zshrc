@@ -103,11 +103,6 @@ if which kubectl > /dev/null; then
 fi
 
 
-# Add shelly command to run gptscript with the current working directory and assistants file
-shelly() {
-    gptscript --disable-cache --workspace "$(pwd)" "${HOME}/.dotfiles/shelly.gpt"
-}
-
 # add mysql-client to the path if it exists
 extend_path "/usr/local/opt/mysql-client/bin"
 
@@ -149,6 +144,3 @@ _xmake() {
 # Link the custom completion function to xmake
 compdef _xmake xmake
 
-
-# Added by Windsurf
-export PATH="/Users/nick/.codeium/windsurf/bin:$PATH"
